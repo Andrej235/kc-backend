@@ -5,29 +5,18 @@ namespace kc_backend
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            _ = builder.Services.AddControllers();
+            _ = builder.Services.AddOpenApi();
 
-            builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
-
-            var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
+            WebApplication app = builder.Build();
             if (app.Environment.IsDevelopment())
-            {
-                app.MapOpenApi();
-            }
+                _ = app.MapOpenApi();
 
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
-
-            app.MapControllers();
-
+            //_ = app.UseHttpsRedirection();
+            _ = app.UseAuthorization();
+            _ = app.MapControllers();
             app.Run();
         }
     }
