@@ -3,8 +3,12 @@
     public class AdvancePurchaseInvoiceItem
     {
         public int ItemId { get; set; }
-        public int WarehouseId { get; set; }
-        public int AdvancePurchaseInvoiceId { get; set; }
         public int Quantity { get; set; }
+
+        public int WarehouseId { get; set; }
+        public Warehouse Warehouse { get; set; } = null!;
+
+        public int AdvancePurchaseInvoiceId { get; set; }
+        public AdvancePurchaseInvoice AdvancePurchaseInvoice { get; set; } = null!;
     }
 }

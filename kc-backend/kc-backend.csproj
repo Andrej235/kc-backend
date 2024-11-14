@@ -8,6 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\**" />
+    <Compile Remove="DTOs\**" />
+    <Compile Remove="Services\**" />
+    <Content Remove="Controllers\**" />
+    <Content Remove="DTOs\**" />
+    <Content Remove="Services\**" />
+    <EmbeddedResource Remove="Controllers\**" />
+    <EmbeddedResource Remove="DTOs\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Controllers\**" />
+    <None Remove="DTOs\**" />
+    <None Remove="Services\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
@@ -16,13 +31,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="DTOs\Request\" />
-    <Folder Include="DTOs\Response\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

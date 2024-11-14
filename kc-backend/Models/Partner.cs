@@ -19,8 +19,8 @@
         public bool TaxObliged { get; set; }
         public string TaxId { get; set; } = null!;//Pib
         public bool IsActive { get; set; }
-        public string Email { get; set; }
-        public string BankAccount { get; set; }
+        public string Email { get; set; } = null!;
+        public string BankAccount { get; set; } = null!;
         public PartnerType Type { get; set; }
     }
 }

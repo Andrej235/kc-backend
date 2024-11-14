@@ -1,6 +1,6 @@
 ﻿namespace kc_backend.Models
 {
-    public class SalesInvoices
+    public class SalesInvoice
     {
         public int Id { get; set; }
         public DateTime IssueDate { get; set; }

@@ -8,6 +8,8 @@
         public DateTime TaxPaymentDate { get; set; }
         public int NonTaxableAmount { get; set; }
         public string Note { get; set; } = null!;
+
         public int PartnerId { get; set; }
+        public Partner Partner { get; set; } = null!;
     }
 }

@@ -6,7 +6,11 @@
         public DateTime CreationDate { get; set; }
         public DateTime DeliveryDate { get; set; }
         public float Discount { get; set; }
+
         public int ObjectId { get; set; }
+        public Object Object { get; set; } = null!;
+
         public int PriceListId { get; set; }
+        public PriceList PriceList { get; set; } = null!;
     }
 }

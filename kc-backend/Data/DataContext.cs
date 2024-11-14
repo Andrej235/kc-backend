@@ -33,10 +33,10 @@ namespace kc_backend.Data
         public DbSet<RequisitionItem> RequisitionItems { get; set; } = null!;
         public DbSet<Route> Routes { get; set; } = null!;
         public DbSet<RouteRequisition> RouteRequisitions { get; set; } = null!;
+        public DbSet<SalesInvoice> SalesInvoices { get; set; } = null!;
         public DbSet<SalesInvoiceCompensation> SalesInvoiceCompensations { get; set; } = null!;
         public DbSet<SalesInvoiceItem> SalesInvoiceItems { get; set; } = null!;
-        public DbSet<SalesInvoices> SalesInvoices { get; set; } = null!;
-        public DbSet<Vehicles> Vehicles { get; set; } = null!;
+        public DbSet<Vehicle> Vehicles { get; set; } = null!;
         public DbSet<Warehouse> Warehouses { get; set; } = null!;
         public DbSet<WarehouseItems> WarehouseItems { get; set; } = null!;
     }
