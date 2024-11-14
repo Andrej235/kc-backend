@@ -1,6 +1,6 @@
 ﻿namespace kc_backend.Models
 {
-    public class Partners
+    public class Partner
     {
         public enum PartnerType
         {

@@ -1,6 +1,6 @@
 ﻿namespace kc_backend.Models
 {
-    public class Routes
+    public class Route
     {
         public int Id { get; set; }
         public DateTime CreationDate { get; set; }

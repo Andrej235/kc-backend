@@ -1,6 +1,6 @@
 ﻿namespace kc_backend.Models
 {
-    public class Requisitions
+    public class Requisition
     {
         public int Id { get; set; }
         public DateTime CreationDate { get; set; }

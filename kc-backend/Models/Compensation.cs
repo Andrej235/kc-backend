@@ -1,6 +1,6 @@
 ﻿namespace kc_backend.Models
 {
-    public class Compensations
+    public class Compensation
     {
         public int Id { get; set; }
         public DateTime CompensationDate { get; set; }

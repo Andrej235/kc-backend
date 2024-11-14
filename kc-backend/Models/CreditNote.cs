@@ -1,6 +1,6 @@
 ﻿namespace kc_backend.Models
 {
-    public class CreditNotes
+    public class CreditNote
     {
         public enum CreditNoteType
         {
