@@ -12,5 +12,7 @@
 
         public int PriceListId { get; set; }
         public PriceList PriceList { get; set; } = null!;
+
+        public ICollection<RequisitionItem> Items { get; set; } = null!;
     }
 }

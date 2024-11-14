@@ -1,6 +1,6 @@
 ﻿namespace kc_backend.Models
 {
-    public class WarehouseItems
+    public class WarehouseItem
     {
         public int WarehouseId { get; set; }
         public Warehouse Warehouse { get; set; } = null!;

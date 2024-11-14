@@ -6,7 +6,7 @@
         public string Address { get; set; } = null!;
         public string LocalCode { get; set; } = null!;
 
-        public int PartnerId { get; set; }
+        public int OwnerId { get; set; }
         public Partner Owner { get; set; } = null!;
     }
 }

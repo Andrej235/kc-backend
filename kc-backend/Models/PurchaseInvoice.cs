@@ -11,5 +11,7 @@
 
         public int PartnerId { get; set; }
         public Partner Partner { get; set; } = null!;
+
+        public ICollection<PurchaseInvoiceItem> Items { get; set; } = [];
     }
 }

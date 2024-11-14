@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>kc_backend</RootNamespace>
+    <UserSecretsId>c010b67c-384f-4736-a4b2-43be64220873</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

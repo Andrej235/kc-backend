@@ -22,5 +22,7 @@
         public string Email { get; set; } = null!;
         public string BankAccount { get; set; } = null!;
         public PartnerType Type { get; set; }
+
+        public ICollection<Object> Objects { get; set; } = [];
     }
 }

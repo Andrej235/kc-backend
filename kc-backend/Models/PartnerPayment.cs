@@ -17,6 +17,6 @@
         public CurrencyType Currency { get; set; }
 
         public int PartnerId { get; set; }
-        public Partner Partner { get; set; }
+        public Partner Partner { get; set; } = null!;
     }
 }
