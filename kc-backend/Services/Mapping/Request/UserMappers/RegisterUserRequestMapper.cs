@@ -2,7 +2,7 @@
 using kc_backend.Models;
 using kc_backend.Utilities;
 
-namespace kc_backend.Services.Mapping.Request
+namespace kc_backend.Services.Mapping.Request.UserMappers
 {
     public class RegisterUserRequestMapper : IRequestMapper<RegisterUserRequestDTO, User>
     {

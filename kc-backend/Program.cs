@@ -1,6 +1,7 @@
 
 using kc_backend.Auth;
 using kc_backend.Data;
+using kc_backend.DTOs.Requests.Partner;
 using kc_backend.DTOs.Requests.User;
 using kc_backend.DTOs.Responses.AuthTokens;
 using kc_backend.Exceptions;
@@ -8,7 +9,10 @@ using kc_backend.Models;
 using kc_backend.Services.Create;
 using kc_backend.Services.Delete;
 using kc_backend.Services.Mapping.Request;
+using kc_backend.Services.Mapping.Request.PartnerMappers;
+using kc_backend.Services.Mapping.Request.UserMappers;
 using kc_backend.Services.Mapping.Response;
+using kc_backend.Services.Mapping.Response.UserMappers;
 using kc_backend.Services.Read;
 using kc_backend.Services.Update;
 using Microsoft.AspNetCore.Authentication;
@@ -79,6 +83,11 @@ namespace kc_backend
             _ = builder.Services.AddScoped<ICreateService<RefreshToken>, CreateService<RefreshToken>>();
             _ = builder.Services.AddScoped<IUpdateSingleService<RefreshToken>, UpdateService<RefreshToken>>();
             _ = builder.Services.AddScoped<IDeleteService<RefreshToken>, DeleteService<RefreshToken>>();
+            #endregion
+
+            #region Partners
+            _ = builder.Services.AddScoped<ICreateService<Partner>, CreateService<Partner>>();
+            _ = builder.Services.AddScoped<IRequestMapper<CreatePartnerRequestDTO, Partner>, CreatePartnerRequestMapper>();
             #endregion
 
             WebApplication app = builder.Build();

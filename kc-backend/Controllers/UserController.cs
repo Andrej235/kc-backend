@@ -17,13 +17,14 @@ using System.Text.RegularExpressions;
 
 namespace kc_backend.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("api/user")]
     public partial class UserController(ICreateService<User> createService,
-                                        IReadSingleSelectedService<User> readSingleSelectedService,
-                                        ITokenManager tokenManager,
-                                        IRequestMapper<RegisterUserRequestDTO, User> registrationMapper,
-                                        IResponseMapper<string, SimpleJWTResponseDTO> jwtResponseMapper) : ControllerBase
+                                    IReadSingleSelectedService<User> readSingleSelectedService,
+                                    ITokenManager tokenManager,
+                                    IRequestMapper<RegisterUserRequestDTO, User> registrationMapper,
+                                    IResponseMapper<string, SimpleJWTResponseDTO> jwtResponseMapper) : ControllerBase
     {
         [GeneratedRegex(@"^[a-zA-Z0-9_.]{3,15}$")]
         private static partial Regex ValidUsernameRegex();
@@ -33,7 +34,12 @@ namespace kc_backend.Controllers
             "admin",
         ];
 
-        [AllowAnonymous]
+        private readonly ICreateService<User> createService = createService;
+        private readonly IReadSingleSelectedService<User> readSingleSelectedService = readSingleSelectedService;
+        private readonly ITokenManager tokenManager = tokenManager;
+        private readonly IRequestMapper<RegisterUserRequestDTO, User> registrationMapper = registrationMapper;
+        private readonly IResponseMapper<string, SimpleJWTResponseDTO> jwtResponseMapper = jwtResponseMapper;
+
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(SimpleJWTResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -52,7 +58,6 @@ namespace kc_backend.Controllers
             return jwtResponseMapper.Map(jwt);
         }
 
-        [AllowAnonymous]
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(SimpleJWTResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -82,7 +87,6 @@ namespace kc_backend.Controllers
             return Created((string?)null, jwtResponseMapper.Map(jwt));
         }
 
-        [AllowAnonymous]
         [HttpPost("refresh")]
         [ProducesResponseType(typeof(SimpleJWTResponseDTO), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -106,7 +110,6 @@ namespace kc_backend.Controllers
             return Created((string?)null, jwtResponseMapper.Map(newJwt));
         }
 
-        [AllowAnonymous]
         [HttpDelete("logout")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -119,7 +122,6 @@ namespace kc_backend.Controllers
             return NoContent();
         }
 
-        [AllowAnonymous]
         [HttpGet("basic")]
         [ProducesResponseType(typeof(UserResponseDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
