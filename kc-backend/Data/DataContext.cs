@@ -5,7 +5,7 @@ using Route = kc_backend.Models.Route;
 
 namespace kc_backend.Data
 {
-    public class DataContext : DbContext
+    public class DataContext(DbContextOptions options) : DbContext(options)
     {
         public DbSet<AdvanceCustomerInvoice> AdvanceCustomerInvoices { get; set; } = null!; //
         public DbSet<AdvancePurchaseInvoice> AdvancePurchaseInvoices { get; set; } = null!; //
@@ -82,7 +82,8 @@ namespace kc_backend.Data
 
                 _ = advancePurchaseInvoiceItem.HasOne(x => x.Warehouse)
                     .WithMany()
-                    .HasForeignKey(x => x.WarehouseId);
+                    .HasForeignKey(x => x.WarehouseId)
+                    .OnDelete(DeleteBehavior.NoAction);
 
                 _ = advancePurchaseInvoiceItem.HasOne(x => x.Item)
                     .WithMany()
@@ -147,7 +148,8 @@ namespace kc_backend.Data
 
                 _ = creditNote.HasOne(x => x.Invoice)
                      .WithMany()
-                     .HasForeignKey(x => x.InvoiceId);
+                     .HasForeignKey(x => x.InvoiceId)
+                     .OnDelete(DeleteBehavior.NoAction);
             });
 
             _ = modelBuilder.Entity<DispatchNote>(dispatchNote =>
@@ -275,7 +277,8 @@ namespace kc_backend.Data
 
                 _ = purchaseInvoiceCompensation.HasOne(x => x.PurchaseInvoice)
                     .WithMany()
-                    .HasForeignKey(x => x.InvoiceId);
+                    .HasForeignKey(x => x.InvoiceId)
+                    .OnDelete(DeleteBehavior.NoAction);
             });
 
             _ = modelBuilder.Entity<PurchaseInvoiceItem>(purchaseInvoiceItem =>
@@ -357,7 +360,7 @@ namespace kc_backend.Data
 
                 _ = salesInvoice.HasOne(x => x.Object)
                     .WithMany()
-                    .HasForeignKey(x => x.Object);
+                    .HasForeignKey(x => x.ObjectId);
             });
 
             _ = modelBuilder.Entity<SalesInvoiceCompensation>(salesInvoiceCompensation =>
@@ -370,7 +373,8 @@ namespace kc_backend.Data
 
                 _ = salesInvoiceCompensation.HasOne(x => x.SalesInvoice)
                     .WithMany()
-                    .HasForeignKey(x => x.InvoiceId);
+                    .HasForeignKey(x => x.InvoiceId)
+                    .OnDelete(DeleteBehavior.NoAction);
             });
 
             _ = modelBuilder.Entity<SalesInvoiceItem>(salesInvoiceItem =>
