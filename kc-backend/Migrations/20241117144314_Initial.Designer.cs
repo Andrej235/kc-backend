@@ -12,8 +12,8 @@ using kc_backend.Data;
 namespace kc_backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241117105801_Initial migration")]
-    partial class Initialmigration
+    [Migration("20241117144314_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -682,6 +682,28 @@ namespace kc_backend.Migrations
                     b.ToTable("PurchaseInvoiceItems");
                 });
 
+            modelBuilder.Entity("kc_backend.Models.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Token")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("JwtId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Token");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("kc_backend.Models.Requisition", b =>
                 {
                     b.Property<int>("Id")
@@ -853,6 +875,35 @@ namespace kc_backend.Migrations
                     b.ToTable("SalesInvoiceItems");
                 });
 
+            modelBuilder.Entity("kc_backend.Models.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("bit");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("Salt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("kc_backend.Models.Vehicle", b =>
                 {
                     b.Property<int>("Id")
@@ -909,14 +960,9 @@ namespace kc_backend.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("WarehouseId1")
-                        .HasColumnType("int");
-
                     b.HasKey("ItemId", "WarehouseId");
 
                     b.HasIndex("WarehouseId");
-
-                    b.HasIndex("WarehouseId1");
 
                     b.ToTable("WarehouseItems");
                 });
@@ -1274,6 +1320,17 @@ namespace kc_backend.Migrations
                     b.Navigation("Warehouse");
                 });
 
+            modelBuilder.Entity("kc_backend.Models.RefreshToken", b =>
+                {
+                    b.HasOne("kc_backend.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("kc_backend.Models.Requisition", b =>
                 {
                     b.HasOne("kc_backend.Models.Object", "Object")
@@ -1424,14 +1481,10 @@ namespace kc_backend.Migrations
                         .IsRequired();
 
                     b.HasOne("kc_backend.Models.Warehouse", "Warehouse")
-                        .WithMany()
+                        .WithMany("Items")
                         .HasForeignKey("WarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("kc_backend.Models.Warehouse", null)
-                        .WithMany("Items")
-                        .HasForeignKey("WarehouseId1");
 
                     b.Navigation("Item");
 

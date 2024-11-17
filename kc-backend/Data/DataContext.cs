@@ -40,6 +40,7 @@ namespace kc_backend.Data
         public DbSet<Warehouse> Warehouses { get; set; } = null!; //
         public DbSet<WarehouseItem> WarehouseItems { get; set; } = null!; //
         public DbSet<User> Users { get; set; } = null!; //
+        public DbSet<RefreshToken> RefreshTokens { get; set; } = null!; //
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -48,6 +49,15 @@ namespace kc_backend.Data
                 _ = user.HasKey(x => x.Id);
 
                 _ = user.HasIndex(x => x.Username).IsUnique();
+            });
+
+            _ = modelBuilder.Entity<RefreshToken>(refreshToken =>
+            {
+                _ = refreshToken.HasKey(x => x.Token);
+
+                _ = refreshToken.HasOne(x => x.User)
+                    .WithMany()
+                    .HasForeignKey(x => x.UserId);
             });
 
             _ = modelBuilder.Entity<AdvanceCustomerInvoice>(advanceCustomerInvoice =>
@@ -415,7 +425,7 @@ namespace kc_backend.Data
                     .HasForeignKey(x => x.ItemId);
 
                 _ = warehouseItem.HasOne(x => x.Warehouse)
-                    .WithMany()
+                    .WithMany(x => x.Items)
                     .HasForeignKey(x => x.WarehouseId);
             });
         }
