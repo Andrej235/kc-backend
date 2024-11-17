@@ -13,6 +13,7 @@ using kc_backend.Services.Read;
 using kc_backend.Services.Update;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -52,11 +53,16 @@ namespace kc_backend
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Key"]!)),
                 ClockSkew = TimeSpan.Zero,
             })
-            .AddScheme<AuthenticationSchemeOptions, AllowExpiredAuthenticationHandler>("AllowExpired", (p) => { })
-            .AddScheme<AuthenticationSchemeOptions, DefaultAuthenticationHandler>("Default", (p) => { });
+            .AddScheme<AuthenticationSchemeOptions, AllowExpiredAuthenticationHandler>("AllowExpired", (p) => { });
 
             _ = builder.Services.AddScoped<ITokenManager, TokenManager>();
-            _ = builder.Services.AddAuthorization();
+            _ = builder.Services.AddAuthorization(x =>
+            {
+                x.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
+                    .RequireAuthenticatedUser()
+                    .RequireRole("admin")
+                    .Build();
+            });
             #endregion
 
 
@@ -81,14 +87,13 @@ namespace kc_backend
             if (app.Environment.IsDevelopment())
                 _ = app.MapOpenApi();
 
-
             //_ = app.UseHttpsRedirection();
             //TODO: Add cors
 
             _ = app.UseAuthentication();
             _ = app.UseAuthorization();
 
-            _ = app.MapControllers();
+            _ = app.MapControllers().RequireAuthorization();
             app.Run();
         }
     }

@@ -33,6 +33,7 @@ namespace kc_backend.Controllers
             "admin",
         ];
 
+        [AllowAnonymous]
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(SimpleJWTResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -51,6 +52,7 @@ namespace kc_backend.Controllers
             return jwtResponseMapper.Map(jwt);
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(SimpleJWTResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -80,7 +82,7 @@ namespace kc_backend.Controllers
             return Created((string?)null, jwtResponseMapper.Map(jwt));
         }
 
-        [Authorize(AuthenticationSchemes = "AllowExpired")]
+        [AllowAnonymous]
         [HttpPost("refresh")]
         [ProducesResponseType(typeof(SimpleJWTResponseDTO), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -104,7 +106,7 @@ namespace kc_backend.Controllers
             return Created((string?)null, jwtResponseMapper.Map(newJwt));
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpDelete("logout")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -117,7 +119,7 @@ namespace kc_backend.Controllers
             return NoContent();
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet("basic")]
         [ProducesResponseType(typeof(UserResponseDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
