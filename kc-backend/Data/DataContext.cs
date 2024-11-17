@@ -39,9 +39,17 @@ namespace kc_backend.Data
         public DbSet<Vehicle> Vehicles { get; set; } = null!; //
         public DbSet<Warehouse> Warehouses { get; set; } = null!; //
         public DbSet<WarehouseItem> WarehouseItems { get; set; } = null!; //
+        public DbSet<User> Users { get; set; } = null!; //
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            _ = modelBuilder.Entity<User>(user =>
+            {
+                _ = user.HasKey(x => x.Id);
+
+                _ = user.HasIndex(x => x.Username).IsUnique();
+            });
+
             _ = modelBuilder.Entity<AdvanceCustomerInvoice>(advanceCustomerInvoice =>
             {
                 _ = advanceCustomerInvoice.HasKey(x => x.Id);
