@@ -4,6 +4,8 @@ using kc_backend.Data;
 using kc_backend.DTOs.Requests.Partner;
 using kc_backend.DTOs.Requests.User;
 using kc_backend.DTOs.Responses.AuthTokens;
+using kc_backend.DTOs.Responses.Object;
+using kc_backend.DTOs.Responses.Partner;
 using kc_backend.Exceptions;
 using kc_backend.Models;
 using kc_backend.Services.Create;
@@ -12,6 +14,8 @@ using kc_backend.Services.Mapping.Request;
 using kc_backend.Services.Mapping.Request.PartnerMappers;
 using kc_backend.Services.Mapping.Request.UserMappers;
 using kc_backend.Services.Mapping.Response;
+using kc_backend.Services.Mapping.Response.ObjectMappers;
+using kc_backend.Services.Mapping.Response.PartnerMappers;
 using kc_backend.Services.Mapping.Response.UserMappers;
 using kc_backend.Services.Read;
 using kc_backend.Services.Update;
@@ -21,6 +25,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Object = kc_backend.Models.Object;
 
 namespace kc_backend
 {
@@ -87,7 +92,19 @@ namespace kc_backend
 
             #region Partners
             _ = builder.Services.AddScoped<ICreateService<Partner>, CreateService<Partner>>();
+            _ = builder.Services.AddScoped<IReadSingleService<Partner>, ReadService<Partner>>();
+            _ = builder.Services.AddScoped<IReadSingleSelectedService<Partner>, ReadService<Partner>>();
+            _ = builder.Services.AddScoped<IReadRangeService<Partner>, ReadService<Partner>>();
+            _ = builder.Services.AddScoped<IUpdateSingleService<Partner>, UpdateService<Partner>>();
+            _ = builder.Services.AddScoped<IDeleteService<Partner>, DeleteService<Partner>>();
             _ = builder.Services.AddScoped<IRequestMapper<CreatePartnerRequestDTO, Partner>, CreatePartnerRequestMapper>();
+            _ = builder.Services.AddScoped<IRequestMapper<UpdatePartnerRequestDTO, Partner>, UpdatePartnerRequestMapper>();
+            _ = builder.Services.AddScoped<IResponseMapper<Partner, SimplePartnerResponseDTO>, SimplePartnerResponseMapper>();
+            _ = builder.Services.AddScoped<IResponseMapper<Partner, DetailedPartnerResponseDTO>, DetailedPartnerResponseMapper>();
+            #endregion
+
+            #region Objects
+            _ = builder.Services.AddScoped<IResponseMapper<Object, SimpleObjectResponseDTO>, SimpleObjectResponseMapper>();
             #endregion
 
             WebApplication app = builder.Build();
