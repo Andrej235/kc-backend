@@ -20,7 +20,7 @@ namespace kc_backend.Controllers
                                           IReadSingleService<Object> readSingleService,
                                           IReadSingleSelectedService<Object> readSingleSelectedService,
                                           IReadRangeService<Object> readRangeService,
-                                          IExecuteUpdateService<Object> executeSingleService,
+                                          IExecuteUpdateService<Object> executeUpdateService,
                                           IDeleteService<Object> deleteService,
                                           IRequestMapper<CreateObjectRequestDTO, Object> createMapper,
                                           IRequestMapper<UpdateObjectRequestDTO, Object> updateMapper,
@@ -31,7 +31,7 @@ namespace kc_backend.Controllers
         private readonly IReadSingleService<Object> readSingleService = readSingleService;
         private readonly IReadSingleSelectedService<Object> readSingleSelectedService = readSingleSelectedService;
         private readonly IReadRangeService<Object> readRangeService = readRangeService;
-        private readonly IExecuteUpdateService<Object> executeSingleService = executeSingleService;
+        private readonly IExecuteUpdateService<Object> executeUpdateService = executeUpdateService;
         private readonly IDeleteService<Object> deleteService = deleteService;
         private readonly IRequestMapper<CreateObjectRequestDTO, Object> createMapper = createMapper;
         private readonly IRequestMapper<UpdateObjectRequestDTO, Object> updateMapper = updateMapper;
