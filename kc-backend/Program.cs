@@ -149,10 +149,15 @@ namespace kc_backend
             _ = builder.Services.AddScoped<IUpdateSingleService<Warehouse>, UpdateService<Warehouse>>();
             _ = builder.Services.AddScoped<IDeleteService<Warehouse>, DeleteService<Warehouse>>();
             _ = builder.Services.AddScoped<IResponseMapper<Warehouse, SimpleWarehouseResponseDTO>, SimpleWarehouseResponseMapper>();
-            _ = builder.Services.AddScoped<IResponseMapper<WarehouseItem, WarehouseItemResponseDTO>, WarehouseItemResponseMapper>();
             _ = builder.Services.AddScoped<IResponseMapper<Warehouse, DetailedWarehouseResponseDTO>, DetailedWarehouseResponseMapper>();
             _ = builder.Services.AddScoped<IRequestMapper<CreateWarehouseRequestDTO, Warehouse>, CreateWarehouseRequestMapper>();
             _ = builder.Services.AddScoped<IRequestMapper<UpdateWarehouseRequestDTO, Warehouse>, UpdateWarehouseRequestMapper>();
+
+            //WarehouseItems
+            _ = builder.Services.AddScoped<ICreateService<WarehouseItem>, CreateService<WarehouseItem>>();
+            _ = builder.Services.AddScoped<IExecuteUpdateService<WarehouseItem>, UpdateService<WarehouseItem>>();
+            _ = builder.Services.AddScoped<IDeleteService<WarehouseItem>, DeleteService<WarehouseItem>>();
+            _ = builder.Services.AddScoped<IResponseMapper<WarehouseItem, WarehouseItemResponseDTO>, WarehouseItemResponseMapper>();
             #endregion
 
             WebApplication app = builder.Build();

@@ -1,5 +1,6 @@
 ﻿using kc_backend.DTOs.Responses.Warehouse;
 using kc_backend.Exceptions;
+using kc_backend.Services.Read;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,7 +27,10 @@ namespace kc_backend.Controllers
             if (id < 1)
                 return NotFound();
 
-            Models.Warehouse warehouse = await readSingleService.Get(x => x.Id == id) ?? throw new NotFoundException($"Warehouse with id {id} not found");
+            Models.Warehouse warehouse = await readSingleService.Get(
+                x => x.Id == id,
+                x => x.Include(x => x.Items).ThenInclude(x => x.Item))
+                ?? throw new NotFoundException($"Warehouse with id {id} not found");
             return Ok(detailedResponseMapper.Map(warehouse));
         }
     }
