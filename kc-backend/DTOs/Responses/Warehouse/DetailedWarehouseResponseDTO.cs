@@ -2,6 +2,6 @@
 {
     public class DetailedWarehouseResponseDTO : SimpleWarehouseResponseDTO
     {
-        public ICollection<WarehouseItemResponseDTO> Items { get; set; } = [];
+        public IEnumerable<WarehouseItemResponseDTO> Items { get; set; } = [];
     }
 }
