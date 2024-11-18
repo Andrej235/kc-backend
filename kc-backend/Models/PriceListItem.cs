@@ -8,6 +8,6 @@
         public int PriceListId { get; set; }
         public PriceList PriceList { get; set; } = null!;
 
-        public int Price { get; set; }
+        public float Price { get; set; }
     }
 }
