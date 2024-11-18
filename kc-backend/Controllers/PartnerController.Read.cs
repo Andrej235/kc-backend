@@ -26,7 +26,7 @@ namespace kc_backend.Controllers
             if (id < 1)
                 return NotFound();
 
-            Models.Partner partner = await readSingleService.Get(x => x.Id == id) ?? throw new NotFoundException();
+            Models.Partner partner = await readSingleService.Get(x => x.Id == id) ?? throw new NotFoundException($"Partner with id {id} not found");
             return Ok(detailedResponseMapper.Map(partner));
         }
     }

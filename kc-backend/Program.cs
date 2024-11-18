@@ -1,6 +1,7 @@
 
 using kc_backend.Auth;
 using kc_backend.Data;
+using kc_backend.DTOs.Requests.Object;
 using kc_backend.DTOs.Requests.Partner;
 using kc_backend.DTOs.Requests.User;
 using kc_backend.DTOs.Responses.AuthTokens;
@@ -11,6 +12,7 @@ using kc_backend.Models;
 using kc_backend.Services.Create;
 using kc_backend.Services.Delete;
 using kc_backend.Services.Mapping.Request;
+using kc_backend.Services.Mapping.Request.ObjectMappers;
 using kc_backend.Services.Mapping.Request.PartnerMappers;
 using kc_backend.Services.Mapping.Request.UserMappers;
 using kc_backend.Services.Mapping.Response;
@@ -65,15 +67,18 @@ namespace kc_backend
             .AddScheme<AuthenticationSchemeOptions, AllowExpiredAuthenticationHandler>("AllowExpired", (p) => { });
 
             _ = builder.Services.AddScoped<ITokenManager, TokenManager>();
-            _ = builder.Services.AddAuthorization(x =>
-            {
-                x.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
+            _ = builder.Services.AddAuthorization(x => x.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
                     .RequireAuthenticatedUser()
                     .RequireRole("admin")
-                    .Build();
-            });
+                    .Build());
             #endregion
 
+            #region Cors
+            _ = builder.Services.AddCors(options => options.AddDefaultPolicy(builder => builder.SetIsOriginAllowed(origin => new Uri(origin).Host is "localhost")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials()));
+            #endregion
 
             _ = builder.Services.AddControllers();
             _ = builder.Services.AddOpenApi();
@@ -104,7 +109,16 @@ namespace kc_backend
             #endregion
 
             #region Objects
+            _ = builder.Services.AddScoped<ICreateService<Object>, CreateService<Object>>();
+            _ = builder.Services.AddScoped<IReadSingleService<Object>, ReadService<Object>>();
+            _ = builder.Services.AddScoped<IReadSingleSelectedService<Object>, ReadService<Object>>();
+            _ = builder.Services.AddScoped<IReadRangeService<Object>, ReadService<Object>>();
+            _ = builder.Services.AddScoped<IExecuteUpdateService<Object>, UpdateService<Object>>();
+            _ = builder.Services.AddScoped<IDeleteService<Object>, DeleteService<Object>>();
             _ = builder.Services.AddScoped<IResponseMapper<Object, SimpleObjectResponseDTO>, SimpleObjectResponseMapper>();
+            _ = builder.Services.AddScoped<IResponseMapper<Object, DetailedObjectResponseDTO>, DetailedObjectResponseMapper>();
+            _ = builder.Services.AddScoped<IRequestMapper<CreateObjectRequestDTO, Object>, CreateObjectRequestMapper>();
+            _ = builder.Services.AddScoped<IRequestMapper<UpdateObjectRequestDTO, Object>, UpdateObjectRequestMapper>();
             #endregion
 
             WebApplication app = builder.Build();
@@ -114,7 +128,7 @@ namespace kc_backend
                 _ = app.MapOpenApi();
 
             //_ = app.UseHttpsRedirection();
-            //TODO: Add cors
+            _ = app.UseCors();
 
             _ = app.UseAuthentication();
             _ = app.UseAuthorization();
