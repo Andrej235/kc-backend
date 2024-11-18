@@ -4,12 +4,14 @@ using kc_backend.Data;
 using kc_backend.DTOs.Requests.Item;
 using kc_backend.DTOs.Requests.Object;
 using kc_backend.DTOs.Requests.Partner;
+using kc_backend.DTOs.Requests.PriceList;
 using kc_backend.DTOs.Requests.User;
 using kc_backend.DTOs.Requests.Warehouse;
 using kc_backend.DTOs.Responses.AuthTokens;
 using kc_backend.DTOs.Responses.Item;
 using kc_backend.DTOs.Responses.Object;
 using kc_backend.DTOs.Responses.Partner;
+using kc_backend.DTOs.Responses.PriceList;
 using kc_backend.DTOs.Responses.Warehouse;
 using kc_backend.Exceptions;
 using kc_backend.Models;
@@ -19,12 +21,14 @@ using kc_backend.Services.Mapping.Request;
 using kc_backend.Services.Mapping.Request.ItemMappers;
 using kc_backend.Services.Mapping.Request.ObjectMappers;
 using kc_backend.Services.Mapping.Request.PartnerMappers;
+using kc_backend.Services.Mapping.Request.PriceListMappers;
 using kc_backend.Services.Mapping.Request.UserMappers;
 using kc_backend.Services.Mapping.Request.WarehouseMappers;
 using kc_backend.Services.Mapping.Response;
 using kc_backend.Services.Mapping.Response.ItemMappers;
 using kc_backend.Services.Mapping.Response.ObjectMappers;
 using kc_backend.Services.Mapping.Response.PartnerMappers;
+using kc_backend.Services.Mapping.Response.PriceListMappers;
 using kc_backend.Services.Mapping.Response.UserMappers;
 using kc_backend.Services.Mapping.Response.WarehouseMappers;
 using kc_backend.Services.Read;
@@ -158,6 +162,22 @@ namespace kc_backend
             _ = builder.Services.AddScoped<IExecuteUpdateService<WarehouseItem>, UpdateService<WarehouseItem>>();
             _ = builder.Services.AddScoped<IDeleteService<WarehouseItem>, DeleteService<WarehouseItem>>();
             _ = builder.Services.AddScoped<IResponseMapper<WarehouseItem, WarehouseItemResponseDTO>, WarehouseItemResponseMapper>();
+            #endregion
+
+            #region PriceLists
+            _ = builder.Services.AddScoped<ICreateService<PriceList>, CreateService<PriceList>>();
+            _ = builder.Services.AddScoped<IReadSingleService<PriceList>, ReadService<PriceList>>();
+            _ = builder.Services.AddScoped<IReadSingleSelectedService<PriceList>, ReadService<PriceList>>();
+            _ = builder.Services.AddScoped<IReadRangeService<PriceList>, ReadService<PriceList>>();
+            _ = builder.Services.AddScoped<IUpdateSingleService<PriceList>, UpdateService<PriceList>>();
+            _ = builder.Services.AddScoped<IDeleteService<PriceList>, DeleteService<PriceList>>();
+            _ = builder.Services.AddScoped<IResponseMapper<PriceList, SimplePriceListResponseDTO>, SimplePriceListResponseMapper>();
+            _ = builder.Services.AddScoped<IResponseMapper<PriceList, DetailedPriceListResponseDTO>, DetailedPriceListResponseMapper>();
+            _ = builder.Services.AddScoped<IRequestMapper<CreatePriceListRequestDTO, PriceList>, CreatePriceListRequestMapper>();
+            _ = builder.Services.AddScoped<IRequestMapper<UpdatePriceListRequestDTO, PriceList>, UpdatePriceListRequestMapper>();
+
+            //Items
+            _ = builder.Services.AddScoped<IResponseMapper<PriceListItem, PriceListItemResponseDTO>, PriceListItemResponseMapper>();
             #endregion
 
             WebApplication app = builder.Build();
