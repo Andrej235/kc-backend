@@ -351,7 +351,7 @@ namespace kc_backend.Data
                 _ = route.HasKey(x => x.Id);
 
                 _ = route.HasOne(x => x.Vehicle)
-                    .WithMany()
+                    .WithMany(x => x.Routes)
                     .HasForeignKey(x => x.VehicleId);
             });
 
