@@ -5,13 +5,16 @@ using kc_backend.DTOs.Requests.Item;
 using kc_backend.DTOs.Requests.Object;
 using kc_backend.DTOs.Requests.Partner;
 using kc_backend.DTOs.Requests.PriceList;
+using kc_backend.DTOs.Requests.Route;
 using kc_backend.DTOs.Requests.User;
+using kc_backend.DTOs.Requests.Vehicle;
 using kc_backend.DTOs.Requests.Warehouse;
 using kc_backend.DTOs.Responses.AuthTokens;
 using kc_backend.DTOs.Responses.Item;
 using kc_backend.DTOs.Responses.Object;
 using kc_backend.DTOs.Responses.Partner;
 using kc_backend.DTOs.Responses.PriceList;
+using kc_backend.DTOs.Responses.Vehicle;
 using kc_backend.DTOs.Responses.Warehouse;
 using kc_backend.Exceptions;
 using kc_backend.Models;
@@ -23,13 +26,16 @@ using kc_backend.Services.Mapping.Request.ObjectMappers;
 using kc_backend.Services.Mapping.Request.PartnerMappers;
 using kc_backend.Services.Mapping.Request.PriceListMappers;
 using kc_backend.Services.Mapping.Request.UserMappers;
+using kc_backend.Services.Mapping.Request.VehicleMappers;
 using kc_backend.Services.Mapping.Request.WarehouseMappers;
 using kc_backend.Services.Mapping.Response;
 using kc_backend.Services.Mapping.Response.ItemMappers;
 using kc_backend.Services.Mapping.Response.ObjectMappers;
 using kc_backend.Services.Mapping.Response.PartnerMappers;
 using kc_backend.Services.Mapping.Response.PriceListMappers;
+using kc_backend.Services.Mapping.Response.RouteMappers;
 using kc_backend.Services.Mapping.Response.UserMappers;
+using kc_backend.Services.Mapping.Response.VehicleMappers;
 using kc_backend.Services.Mapping.Response.WarehouseMappers;
 using kc_backend.Services.Read;
 using kc_backend.Services.Update;
@@ -40,6 +46,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Object = kc_backend.Models.Object;
+using Route = kc_backend.Models.Route;
 
 namespace kc_backend
 {
@@ -181,6 +188,23 @@ namespace kc_backend
             _ = builder.Services.AddScoped<IExecuteUpdateService<PriceListItem>, UpdateService<PriceListItem>>();
             _ = builder.Services.AddScoped<IDeleteService<PriceListItem>, DeleteService<PriceListItem>>();
             _ = builder.Services.AddScoped<IResponseMapper<PriceListItem, PriceListItemResponseDTO>, PriceListItemResponseMapper>();
+            #endregion
+
+            #region Vehicles
+            _ = builder.Services.AddScoped<ICreateService<Vehicle>, CreateService<Vehicle>>();
+            _ = builder.Services.AddScoped<IReadSingleService<Vehicle>, ReadService<Vehicle>>();
+            _ = builder.Services.AddScoped<IReadSingleSelectedService<Vehicle>, ReadService<Vehicle>>();
+            _ = builder.Services.AddScoped<IReadRangeService<Vehicle>, ReadService<Vehicle>>();
+            _ = builder.Services.AddScoped<IUpdateSingleService<Vehicle>, UpdateService<Vehicle>>();
+            _ = builder.Services.AddScoped<IDeleteService<Vehicle>, DeleteService<Vehicle>>();
+            _ = builder.Services.AddScoped<IResponseMapper<Vehicle, SimpleVehicleResponseDTO>, SimpleVehicleResponseMapper>();
+            _ = builder.Services.AddScoped<IResponseMapper<Vehicle, DetailedVehicleResponseDTO>, DetailedVehicleResponseMapper>();
+            _ = builder.Services.AddScoped<IRequestMapper<CreateVehicleRequestDTO, Vehicle>, CreateVehicleRequestMapper>();
+            _ = builder.Services.AddScoped<IRequestMapper<UpdateVehicleRequestDTO, Vehicle>, UpdateVehicleRequestMapper>();
+            #endregion
+
+            #region Routes
+            _ = builder.Services.AddScoped<IResponseMapper<Route, SimpleRouteResponseDTO>, SimpleRouteResponseMapper>();
             #endregion
 
             WebApplication app = builder.Build();
