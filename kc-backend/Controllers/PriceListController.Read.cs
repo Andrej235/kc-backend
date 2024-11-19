@@ -1,4 +1,5 @@
 ﻿using kc_backend.DTOs.Responses.Object;
+using kc_backend.DTOs.Responses.PriceList;
 using kc_backend.Exceptions;
 using kc_backend.Services.Read;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,21 @@ namespace kc_backend.Controllers
         [ProducesResponseType(typeof(IEnumerable<SimpleObjectResponseDTO>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Get([FromQuery] string? nameFilter, [FromQuery] int? offset, [FromQuery] int? limit)
         {
-            IEnumerable<Models.PriceList> data = nameFilter is null
-                ? await readRangeService.Get(_ => true, offset, limit)
-                : await readRangeService.Get(x => EF.Functions.Like(x.Name, $"%{nameFilter}%"), offset, limit);
+            var data = await readRangeSelectedService.Get(
+                    x => new
+                    {
+                        Entity = x,
+                        ItemCount = x.Items.Count
+                    },
+                    nameFilter is null ? _ => true : x => EF.Functions.Like(x.Name, $"%{nameFilter}%"),
+                    offset, limit);
 
-            return Ok(data.Select(simpleResponseMapper.Map));
+            return Ok(data.Select(x =>
+            {
+                SimplePriceListResponseDTO y = simpleResponseMapper.Map(x.Entity);
+                y.ItemCount = x.ItemCount;
+                return y;
+            }));
         }
 
         [HttpGet("{id}")]
@@ -27,7 +38,11 @@ namespace kc_backend.Controllers
             if (id < 1)
                 return NotFound();
 
-            Models.PriceList priceList = await readSingleService.Get(x => x.Id == id, x => x.Include(x => x.Items)) ?? throw new NotFoundException($"PriceList with id {id} not found.");
+            Models.PriceList priceList = await readSingleService.Get(
+                x => x.Id == id,
+                x => x.Include(x => x.Items).ThenInclude(x => x.Item))
+                ?? throw new NotFoundException($"PriceList with id {id} not found.");
+
             return Ok(detailedResponseMapper.Map(priceList));
         }
     }

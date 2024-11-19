@@ -168,7 +168,7 @@ namespace kc_backend
             _ = builder.Services.AddScoped<ICreateService<PriceList>, CreateService<PriceList>>();
             _ = builder.Services.AddScoped<IReadSingleService<PriceList>, ReadService<PriceList>>();
             _ = builder.Services.AddScoped<IReadSingleSelectedService<PriceList>, ReadService<PriceList>>();
-            _ = builder.Services.AddScoped<IReadRangeService<PriceList>, ReadService<PriceList>>();
+            _ = builder.Services.AddScoped<IReadRangeSelectedService<PriceList>, ReadService<PriceList>>();
             _ = builder.Services.AddScoped<IUpdateSingleService<PriceList>, UpdateService<PriceList>>();
             _ = builder.Services.AddScoped<IDeleteService<PriceList>, DeleteService<PriceList>>();
             _ = builder.Services.AddScoped<IResponseMapper<PriceList, SimplePriceListResponseDTO>, SimplePriceListResponseMapper>();
@@ -177,6 +177,9 @@ namespace kc_backend
             _ = builder.Services.AddScoped<IRequestMapper<UpdatePriceListRequestDTO, PriceList>, UpdatePriceListRequestMapper>();
 
             //Items
+            _ = builder.Services.AddScoped<ICreateService<PriceListItem>, CreateService<PriceListItem>>();
+            _ = builder.Services.AddScoped<IExecuteUpdateService<PriceListItem>, UpdateService<PriceListItem>>();
+            _ = builder.Services.AddScoped<IDeleteService<PriceListItem>, DeleteService<PriceListItem>>();
             _ = builder.Services.AddScoped<IResponseMapper<PriceListItem, PriceListItemResponseDTO>, PriceListItemResponseMapper>();
             #endregion
 

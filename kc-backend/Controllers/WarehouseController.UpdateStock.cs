@@ -17,7 +17,7 @@ namespace kc_backend.Controllers
             return NoContent();
         }
 
-        [HttpPost("{warehouseId}/stock/add")]
+        [HttpPost("{warehouseId}/stock")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> AddToStock(int warehouseId, [FromBody] CreateWarehouseItemRequestDTO request)
