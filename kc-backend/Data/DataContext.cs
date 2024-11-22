@@ -353,19 +353,21 @@ namespace kc_backend.Data
                 _ = route.HasOne(x => x.Vehicle)
                     .WithMany(x => x.Routes)
                     .HasForeignKey(x => x.VehicleId);
-            });
 
-            _ = modelBuilder.Entity<RouteRequisition>(routeRequisitions =>
-            {
-                _ = routeRequisitions.HasKey(x => new { x.RequisitionId, x.RouteId });
+                _ = route.HasMany(x => x.Requisitions)
+                    .WithMany(x => x.UsedInRoutes)
+                    .UsingEntity<RouteRequisition>(routeRequisitions =>
+                    {
+                        _ = routeRequisitions.HasKey(x => new { x.RequisitionId, x.RouteId });
 
-                _ = routeRequisitions.HasOne(x => x.Requisition)
-                    .WithMany()
-                    .HasForeignKey(x => x.RequisitionId);
+                        _ = routeRequisitions.HasOne(x => x.Requisition)
+                            .WithMany()
+                            .HasForeignKey(x => x.RequisitionId);
 
-                _ = routeRequisitions.HasOne(x => x.Route)
-                    .WithMany()
-                    .HasForeignKey(x => x.RouteId);
+                        _ = routeRequisitions.HasOne(x => x.Route)
+                            .WithMany()
+                            .HasForeignKey(x => x.RouteId);
+                    });
             });
 
             _ = modelBuilder.Entity<SalesInvoice>(salesInvoice =>

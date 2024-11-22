@@ -65,6 +65,7 @@ namespace kc_backend
                 _ = x.UseSqlServer(configuration.GetConnectionString("SQLConnectionString"));
                 _ = x.EnableSensitiveDataLogging(); //TODO-PROD: remove in production
             });
+            _ = builder.Services.AddSwaggerGen(options => options.SupportNonNullableReferenceTypes());
 
             #region JWT / Auth
             _ = builder.Services.AddAuthentication(x =>
@@ -211,7 +212,10 @@ namespace kc_backend
             _ = app.UseExceptionHandler();
 
             if (app.Environment.IsDevelopment())
-                _ = app.MapOpenApi();
+            {
+                _ = app.UseSwagger();
+                _ = app.UseSwaggerUI();
+            }
 
             //_ = app.UseHttpsRedirection();
             _ = app.UseCors();

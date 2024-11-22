@@ -10,7 +10,7 @@ namespace kc_backend.Services.Mapping.Response.RouteMappers
             CreationDate = from.CreationDate,
             Description = from.Description,
             GoodsWeight = from.GoodsWeight,
-            VehicleId = from.VehicleId
+            VehicleId = from.VehicleId,
         };
     }
 }

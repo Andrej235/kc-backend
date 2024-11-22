@@ -14,5 +14,6 @@
         public PriceList PriceList { get; set; } = null!;
 
         public ICollection<RequisitionItem> Items { get; set; } = null!;
+        public ICollection<Route> UsedInRoutes { get; set; } = null!;
     }
 }
