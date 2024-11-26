@@ -16,7 +16,11 @@ namespace kc_backend.Services.Mapping.Request.UserMappers
                 Username = from.Username,
                 Salt = salt,
                 PasswordHash = hash,
-                IsVerified = false
+                IsVerified = false,
+                CompanyPosition = from.CompanyPosition,
+                Email = from.Email,
+                FirstName = from.FirstName,
+                LastName = from.LastName
             };
         }
     }

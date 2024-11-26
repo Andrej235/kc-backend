@@ -139,6 +139,10 @@ namespace kc_backend.Controllers
                 x => new UserResponseDTO
                 {
                     Username = x.Username,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    Email = x.Email,
+                    CompanyPosition = x.CompanyPosition,
                 },
                 x => x.Id == userId)
                 ?? throw new UnauthorizedException();

@@ -49,6 +49,7 @@ namespace kc_backend.Data
                 _ = user.HasKey(x => x.Id);
 
                 _ = user.HasIndex(x => x.Username).IsUnique();
+                _ = user.HasIndex(x => x.Email).IsUnique();
             });
 
             _ = modelBuilder.Entity<RefreshToken>(refreshToken =>
