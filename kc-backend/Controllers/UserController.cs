@@ -39,6 +39,7 @@ namespace kc_backend.Controllers
         private readonly IRequestMapper<RegisterUserRequestDTO, User> registrationMapper = registrationMapper;
         private readonly IResponseMapper<string, SimpleJWTResponseDTO> jwtResponseMapper = jwtResponseMapper;
 
+        [AllowAnonymous]
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(SimpleJWTResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
