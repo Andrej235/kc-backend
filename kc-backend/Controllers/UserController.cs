@@ -17,7 +17,6 @@ using System.Text.RegularExpressions;
 
 namespace kc_backend.Controllers
 {
-    [AllowAnonymous]
     [ApiController]
     [Route("api/user")]
     public partial class UserController(ICreateService<User> createService,
@@ -58,6 +57,7 @@ namespace kc_backend.Controllers
             return jwtResponseMapper.Map(jwt);
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(SimpleJWTResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -87,6 +87,7 @@ namespace kc_backend.Controllers
             return Created((string?)null, jwtResponseMapper.Map(jwt));
         }
 
+        [Authorize(AuthenticationSchemes = "AllowExpired")]
         [HttpPost("refresh")]
         [ProducesResponseType(typeof(SimpleJWTResponseDTO), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
