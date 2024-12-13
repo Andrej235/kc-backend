@@ -45,6 +45,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json.Serialization;
 using Object = kc_backend.Models.Object;
 using Route = kc_backend.Models.Route;
 
@@ -100,7 +101,8 @@ namespace kc_backend
                     .AllowCredentials()));
             #endregion
 
-            _ = builder.Services.AddControllers();
+            _ = builder.Services.AddControllers()
+                .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
             _ = builder.Services.AddOpenApi();
 
             #region User
