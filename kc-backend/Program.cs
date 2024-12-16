@@ -67,6 +67,7 @@ namespace kc_backend
                 _ = x.EnableSensitiveDataLogging(); //TODO-PROD: remove in production
             });
             _ = builder.Services.AddSwaggerGen(options => options.SupportNonNullableReferenceTypes());
+            _ = builder.Services.AddOpenApi();
 
             #region JWT / Auth
             _ = builder.Services.AddAuthentication(x =>
@@ -215,6 +216,7 @@ namespace kc_backend
 
             if (app.Environment.IsDevelopment())
             {
+                _ = app.MapOpenApi();
                 _ = app.UseSwagger();
                 _ = app.UseSwaggerUI();
             }
