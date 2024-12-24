@@ -8,14 +8,14 @@ namespace kc_backend.Controllers
     public partial class PartnerController
     {
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<SimplePartnerResponseDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<DetailedPartnerResponseDTO>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Get([FromQuery] string? nameFilter, [FromQuery] int? offset, [FromQuery] int? limit)
         {
             IEnumerable<Models.Partner> data = nameFilter is null
                 ? await readRangeService.Get(_ => true, offset, limit)
                 : await readRangeService.Get(x => EF.Functions.Like(x.Name, $"%{nameFilter}%"), offset, limit);
 
-            return Ok(data.Select(simpleResponseMapper.Map));
+            return Ok(data.Select(detailedResponseMapper.Map));
         }
 
         [HttpGet("{id}")]
